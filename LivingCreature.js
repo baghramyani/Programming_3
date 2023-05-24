@@ -30,10 +30,16 @@ class LivingCreature {
     return found;
   }
 
-  random(num) {
-    const result = Math.floor(Math.random() * num);
-    return result;
+  random(items) {
+    var item ;
+    if (Array.isArray(items)){
+      item = items [Math.floor(Math.random() * items.length)];
+    } else if (typeof (items)=="number"){
+      item = MAth.floor(MAth.random() * items);
+    }
+    return item
   }
+  ; 
 }
 
 module.exports = LivingCreature;

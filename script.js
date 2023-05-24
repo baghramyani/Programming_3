@@ -1,4 +1,4 @@
-let socket = io();
+var socket = io();
 var side = 10;
 let myMatrix = [];
 
@@ -18,7 +18,7 @@ function setup() {
 }
 
 function draw(matrix) {
-  if (!matrix) return; // Check if matrix is defined
+  if (!matrix) return; 
 
   for (var y = 0; y < matrix.length; y++) {
     for (var x = 0; x < matrix[y].length; x++) {

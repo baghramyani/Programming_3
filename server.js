@@ -1,15 +1,17 @@
 var express = require("express");
 var app = express();
-var server = require("http").createServer(app);
-var io = require("socket.io")(server);
-
 app.use(express.static("."));
-
 app.get("/", function (req, res) {
   res.redirect("index.html");
 });
 
-server.listen(3000);
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+server.listen(3000, function(){
+  console.log("Is running on port 3000")
+});
+
+
 
 const Grass = require("./Grass");
 const Mard = require("./Mard");
@@ -33,11 +35,11 @@ genMatrix = (n, m) => {
   return matrix;
 };
 
+matrix = [];
 grassArr = [];
 grassEaterArr = [];
 kendaniArr = [];
 mardArr = [];
-matrix = [];
 
 function createObjects() {
   for (let i = 0; i < matrix.length; i++) {
@@ -84,6 +86,10 @@ function drawGame() {
     mardArr[i].mul();
     mardArr[i].die();
   }
+  
+  io.sockets.emit("send matrix", matrix);
+
+  
 }
 
 setInterval(function () {
@@ -92,5 +98,4 @@ setInterval(function () {
 
 io.on("connection", function (socket) {
   socket.emit("initial", matrix);
-  socket.emit("send matrix", matrix);
 });
